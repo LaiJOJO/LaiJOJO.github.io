@@ -9,7 +9,8 @@
       <div class="nav">
         <div class="left">
           <button class="btn" @click="changeUsers(null)">新建</button>
-          <input class="search" v-model="input" @focus="focus()" @blur="blur()" />
+          <input class="search" ref="refInput" v-model="input" @focus="focus()" @blur="blur()"
+            @keyup.enter="blur()" />
         </div>
         <div class="right">
           <button class="btn" @click="layout">撤销</button>
@@ -95,13 +96,14 @@
 </template>
 
 <script>
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch ,nextTick} from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 export default {
   name: 'Home',
   setup() {
     const input = ref('')
     const dialogVisible = ref(false)
+    const refInput = ref(null)
     // 已存在用户
     const usersInfo = reactive([{ allowDelete: false, id: 1, ischecked: false, name: '张三', age: 18, gender: '男', phone: 'xxxxx', address: 'xxxxxxxxx' }])
     const usersInfoCopy = reactive([])
@@ -151,6 +153,9 @@ export default {
       input.value = input.value === '按关键字搜索' ? '' : input.value
     }
     function blur() {
+      nextTick(() => {
+        refInput.value.blur();
+      })
       input.value = input.value === '' ? '按关键字搜索' : input.value
       // 不用过滤
       if (input.value === '按关键字搜索') {
@@ -271,49 +276,49 @@ export default {
       if (!formRef) return
       try {
         formRef.value.validate((valid) => {
-        // 验证通过
-        if (valid) {
-          // 筛选当前修改的用户对象
-          const findUserIndex = usersInfo.findIndex((eachUser) => {
-            return eachUser.id === currentId.value
-          })
-          // 新增用户
-          if (findUserIndex == -1) {
-            const newUser = {}
-            newUser.id = id.value
-            newUser.ischecked = false
-            newUser.name = form.name
-            newUser.gender = form.gender
-            newUser.age = form.age
-            newUser.phone = form.phone
-            newUser.address = form.address + form.detailAddress
-            // 过滤完全相同信息
-            let isInclude = filters(newUser)
-            if (isInclude) {
-              return ElMessage('相同信息已存在')
+          // 验证通过
+          if (valid) {
+            // 筛选当前修改的用户对象
+            const findUserIndex = usersInfo.findIndex((eachUser) => {
+              return eachUser.id === currentId.value
+            })
+            // 新增用户
+            if (findUserIndex == -1) {
+              const newUser = {}
+              newUser.id = id.value
+              newUser.ischecked = false
+              newUser.name = form.name
+              newUser.gender = form.gender
+              newUser.age = form.age
+              newUser.phone = form.phone
+              newUser.address = form.address + form.detailAddress
+              // 过滤完全相同信息
+              let isInclude = filters(newUser)
+              if (isInclude) {
+                return ElMessage('相同信息已存在')
+              }
+              newUser.id = id.value + 1
+              // 即使缓存新旧值
+              setOldItem(JSON.stringify(usersInfo))
+              usersInfo.push(newUser)
+              setNewItem(JSON.stringify(usersInfo))
             }
-            newUser.id = id.value + 1
-            // 即使缓存新旧值
-            setOldItem(JSON.stringify(usersInfo))
-            usersInfo.push(newUser)
-            setNewItem(JSON.stringify(usersInfo))
+            // 编辑用户
+            else {
+              setOldItem(JSON.stringify(usersInfo))
+              usersInfo[findUserIndex].name = form.name
+              usersInfo[findUserIndex].gender = form.gender
+              usersInfo[findUserIndex].phone = form.phone
+              usersInfo[findUserIndex].address = form.address + form.detailAddress
+              setNewItem(JSON.stringify(usersInfo))
+            }
+            // 保存时关闭弹窗，当前id重置
+            dialogVisible.value = false
+            currentId.value = -1
+          } else {
+            return false
           }
-          // 编辑用户
-          else {
-            setOldItem(JSON.stringify(usersInfo))
-            usersInfo[findUserIndex].name = form.name
-            usersInfo[findUserIndex].gender = form.gender
-            usersInfo[findUserIndex].phone = form.phone
-            usersInfo[findUserIndex].address = form.address + form.detailAddress
-            setNewItem(JSON.stringify(usersInfo))
-          }
-          // 保存时关闭弹窗，当前id重置
-          dialogVisible.value = false
-          currentId.value = -1
-        } else {
-          return false
-        }
-      })
+        })
       } catch (error) {
         return false
       }
@@ -441,6 +446,7 @@ export default {
       rules,
       formRef,
       usersInfoCopy,
+      refInput,
       focus,
       blur,
       handleClose,
