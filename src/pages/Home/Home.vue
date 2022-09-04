@@ -41,7 +41,7 @@
               <td><span class="info address">{{ eachUser.address }}</span></td>
               <td>
                 <div class="control">
-                  <button style="margin-right:5px;" @click="changeUsers(eachUser.id)">编辑</button>
+                  <button style="margin-right:.1rem;" @click="changeUsers(eachUser.id)">编辑</button>
                   <button @click="deleteUser(eachUser.id)">删除</button>
                 </div>
               </td>
@@ -61,33 +61,33 @@
       :close-on-click-modal="false" :modal="false" title="新建/编辑用户">
       <!-- 表单 -->
       <span>
-        <el-form :model="form" label-width="120px" @submit.prevent inline size="large" label-position="top"
+        <el-form :model="form" label-width="2.4rem" @submit.prevent inline size="large" label-position="top"
           :rules="rules" ref="formRef">
           <el-form-item label="姓名" prop="name">
-            <el-input v-model="form.name" :style="'width:300px'" />
+            <el-input v-model="form.name" :style="'width:6rem'" />
           </el-form-item>
           <el-form-item label="性别" prop="gender">
-            <el-select v-model="form.gender" :style="'width:300px'">
+            <el-select v-model="form.gender" :style="'width:6rem'">
               <el-option label="男" value="男" />
               <el-option label="女" value="女" />
             </el-select>
           </el-form-item>
-          <el-form-item label="联系电话" :style="'width:500px'" prop="phone">
-            <el-input v-model.number="form.phone" :style="'width:300px'" />
+          <el-form-item label="联系电话" :style="'width:10rem'" prop="phone">
+            <el-input v-model.number="form.phone" :style="'width:6rem'" />
           </el-form-item>
           <el-form-item label="详细地址" prop="detailAddress">
             <div class="example-block">
               <span class="example-demonstration"></span>
               <el-cascader placeholder="请选择地址" :options="options" :props="hover" @change="handleChange" />
             </div>
-            <el-input v-model="form.detailAddress" :style="'width:390px;margin-left:40px;'" />
+            <el-input v-model="form.detailAddress" :style="'width:7.8rem;margin-left:.8rem;'" />
           </el-form-item>
         </el-form>
       </span>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="handleClose">关闭</el-button>
-          <el-button type="primary" style="margin-left:0px" @click="saveUsers(formRef)">保存</el-button>
+          <el-button type="primary" style="margin-left:0rem" @click="saveUsers(formRef)">保存</el-button>
         </span>
       </template>
     </el-dialog>
@@ -473,16 +473,17 @@ export default {
   }
 
   .title {
-    height: 80px;
-    font-size: 20px;
+    width: 30rem;
+    height: 1.6rem;
+    font-size: .4rem;
     font-weight: bold;
     background-color: #ececec;
-    line-height: 80px;
+    line-height: 1.6rem;
     text-align: center;
   }
 
   .banner {
-    padding: 45px 100px;
+    padding: .9rem 2rem;
 
     button {
       border: 0;
@@ -496,7 +497,7 @@ export default {
     .nav {
       display: flex;
       justify-content: space-between;
-      font-size: 15px;
+      font-size: .3rem;
 
       button {
         cursor: pointer;
@@ -506,55 +507,55 @@ export default {
         display: flex;
 
         .search {
-          width: 340px;
-          height: 30px;
+          width: 6.8rem;
+          height: .6rem;
           background-color: #ececec;
-          margin-left: 12px;
-          border: 0px;
+          margin-left: .24rem;
+          border: 0rem;
           color: black;
-          padding: 0 10px;
-          font-size: 15px;
+          padding: 0 .2rem;
+          font-size: .3rem;
           font-weight: bold;
         }
       }
 
       .btn {
-        width: 75px;
-        height: 30px;
-        border: 0px;
+        width: 1.5rem;
+        height: .6rem;
+        border: 0rem;
         font-weight: bold;
       }
     }
 
     .table-box {
-      margin-top: 5px;
-      font-size: 15px;
+      margin-top: .1rem;
+      font-size: .3rem;
       width: 100%;
 
       .table {
         thead {
-          height: 33px;
+          height: .66rem;
           background-color: #ececec;
         }
 
         tbody {
           box-sizing: border-box;
-          height: 41px;
+          height: .82rem;
 
           tr {
-            border: 1px solid #ebebeb;
-            border-top: 0px;
+            border: .02rem solid #ebebeb;
+            border-top: 0rem;
 
             td {
-              height: 40px;
+              height: .8rem;
 
               .info {
                 text-align: center;
-                line-height: 25px;
-                width: 75px;
-                height: 25px;
+                line-height: .5rem;
+                width: 1.5rem;
+                height: .5rem;
                 background-color: #ececec;
-                margin: 5px 20px;
+                margin: .1rem .4rem;
                 display: -webkit-box;
                 -webkit-line-clamp: 1;
                 -webkit-box-orient: vertical;
@@ -562,29 +563,29 @@ export default {
               }
 
               .phone {
-                width: 115px;
+                width: 2.3rem;
               }
 
               .address {
-                width: 600px;
-                margin-left: 50px;
+                width: 12rem;
+                margin-left: 1rem;
                 overflow: hidden;
               }
 
               .checkbox {
-                margin-left: 17px;
+                margin-left: .34rem;
               }
 
               .control {
-                margin: auto 15px;
-                font-size: 10px;
-                width: 87px;
+                margin: auto .3rem;
+                font-size: .2rem;
+                width: 1.74rem;
 
                 button {
                   display: inline-block;
                   font-weight: bold;
-                  height: 25px;
-                  width: 40px;
+                  height: .5rem;
+                  width: .8rem;
                 }
               }
             }
@@ -595,20 +596,20 @@ export default {
     }
 
     .del-btn {
-      margin-top: 10px;
+      margin-top: .2rem;
 
       button {
-        font-size: 15px;
+        font-size: .3rem;
         font-weight: bold;
-        width: 75px;
-        height: 33px;
+        width: 1.5rem;
+        height: .66rem;
         text-align: center;
       }
     }
   }
 
   .dialog-footer button:first-child {
-    margin-right: 5px;
+    margin-right: .1rem;
   }
 
   /deep/ .el-dialog__header {
@@ -616,21 +617,21 @@ export default {
   }
 
   /deep/ .el-dialog__title {
-    font-size: 15px;
+    font-size: .3rem;
     color: black;
   }
 
   /deep/ .el-dialog__body {
-    margin-left: 40px;
-    height: 380px;
+    margin-left: .8rem;
+    height: 7.6rem;
   }
 
   /deep/ .el-form--large.el-form--label-top .el-form-item .el-form-item__label {
-    margin-bottom: 5px;
+    margin-bottom: .1rem;
   }
 
   /deep/ .el-form--inline.el-form--label-top .el-form-item {
-    margin-bottom: 15px;
+    margin-bottom: .3rem;
   }
 }
 </style>
